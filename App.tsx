@@ -1,20 +1,65 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
-export default function App() {
+function HomeScreen({navigation}: {navigation: any}) {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <TouchableOpacity onPress={() => navigation.navigate('Details')} >
+            <Text>Home Screen</Text>
+        </TouchableOpacity>
+      </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function SettingsScreen({navigation}: {navigation: any}) {
+    return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <TouchableOpacity onPress={() => navigation.navigate('Details')} >
+                <Text>Settings Screen</Text>
+            </TouchableOpacity>
+        </View>
+    );
+}
+
+function DetailsScreen() {
+    return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text>Details Screen</Text>
+        </View>
+    );
+}
+
+const Stack = createNativeStackNavigator();
+
+const Tab = createBottomTabNavigator();
+
+function StackNavigator() {
+    return (
+        <Stack.Navigator
+            initialRouteName="Settings"
+        >
+            <Stack.Screen
+                name="Settings"
+                component={SettingsScreen}
+                options={{headerShown: false}}
+            />
+            <Stack.Screen name="Details" component={DetailsScreen} />
+        </Stack.Navigator>
+    );
+}
+
+export default function App() {
+  return (
+      <NavigationContainer>
+          <Tab.Navigator
+              initialRouteName="Home"
+          >
+              <Tab.Screen name="Home" component={HomeScreen} />
+              <Tab.Screen name="Settings" component={StackNavigator} />
+          </Tab.Navigator>
+      </NavigationContainer>
+  );
+}
