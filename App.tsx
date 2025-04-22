@@ -3,47 +3,21 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-
-function HomeScreen({navigation}: {navigation: any}) {
-  return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <TouchableOpacity onPress={() => navigation.navigate('Details')} >
-            <Text>Home Screen</Text>
-        </TouchableOpacity>
-      </View>
-  );
-}
-
-function SettingsScreen({navigation}: {navigation: any}) {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <TouchableOpacity onPress={() => navigation.navigate('Details')} >
-                <Text>Settings Screen</Text>
-            </TouchableOpacity>
-        </View>
-    );
-}
-
-function DetailsScreen() {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Details Screen</Text>
-        </View>
-    );
-}
+import HomeScreen from "./screens/HomeScreen";
+import DetailsScreen from "./screens/DetailsScreen";
+import AddScreen from "./screens/AddScreen";
 
 const Stack = createNativeStackNavigator();
-
 const Tab = createBottomTabNavigator();
 
 function StackNavigator() {
     return (
         <Stack.Navigator
-            initialRouteName="Settings"
+            initialRouteName="Home"
         >
             <Stack.Screen
-                name="Settings"
-                component={SettingsScreen}
+                name="Home"
+                component={HomeScreen}
                 options={{headerShown: false}}
             />
             <Stack.Screen name="Details" component={DetailsScreen} />
@@ -57,8 +31,8 @@ export default function App() {
           <Tab.Navigator
               initialRouteName="Home"
           >
-              <Tab.Screen name="Home" component={HomeScreen} />
-              <Tab.Screen name="Settings" component={StackNavigator} />
+              <Tab.Screen name="Home" component={StackNavigator} />
+              <Tab.Screen name="Add" component={AddScreen} />
           </Tab.Navigator>
       </NavigationContainer>
   );
